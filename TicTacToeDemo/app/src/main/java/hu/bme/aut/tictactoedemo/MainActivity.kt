@@ -2,6 +2,7 @@ package hu.bme.aut.tictactoedemo
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import hu.bme.aut.tictactoedemo.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -15,5 +16,9 @@ class MainActivity : AppCompatActivity() {
         binding.btnReset.setOnClickListener {
             binding.ticTacToeView.reset()
         }
+    }
+
+    fun showMessage(msg: String) {
+        Toast.makeText(this,msg,Toast.LENGTH_LONG).show()
     }
 }
