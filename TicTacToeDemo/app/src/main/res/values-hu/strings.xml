@@ -1,4 +1,4 @@
 <resources>
     <string name="app_name">TicTacToeDemo</string>
-    <string name="textOComes">The next player is O</string>
+    <string name="textOComes">A következő a O</string>
 </resources>

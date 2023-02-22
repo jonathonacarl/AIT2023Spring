@@ -16,6 +16,15 @@ class MainActivity : AppCompatActivity() {
         binding.btnReset.setOnClickListener {
             binding.ticTacToeView.reset()
         }
+
+    }
+
+    fun isFlagmodeOn() : Boolean {
+        return binding.cbFlagging.isChecked
+    }
+
+    fun showText(msg: String) {
+        binding.tvMessage.text = msg
     }
 
     fun showMessage(msg: String) {

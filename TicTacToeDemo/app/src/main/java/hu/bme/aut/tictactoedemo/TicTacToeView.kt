@@ -1,10 +1,7 @@
 package hu.bme.aut.tictactoedemo
 
 import android.content.Context
-import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.Paint
-import android.graphics.PointF
+import android.graphics.*
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
@@ -12,6 +9,11 @@ import android.view.View
 class TicTacToeView(context: Context?, attrs: AttributeSet?) : View(context, attrs) {
     private val paintBackGround = Paint()
     private val paintLines = Paint()
+
+    private val paintText = Paint()
+
+    private var myImg = BitmapFactory.decodeResource(
+        resources, R.drawable.mountain)
 
     init {
         paintBackGround.color = Color.BLACK
@@ -21,6 +23,18 @@ class TicTacToeView(context: Context?, attrs: AttributeSet?) : View(context, att
         paintLines.color = Color.WHITE
         paintLines.style = Paint.Style.STROKE
         paintLines.strokeWidth = 5f
+
+        paintText.color = Color.GREEN
+        paintText.textSize = 100f
+    }
+
+    override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
+        super.onSizeChanged(w, h, oldw, oldh)
+
+        paintText.textSize = height / 3f
+
+        myImg = Bitmap.createScaledBitmap(myImg,
+            width/3, height/3, false)
     }
 
     override fun onDraw(canvas: Canvas) {
@@ -28,9 +42,13 @@ class TicTacToeView(context: Context?, attrs: AttributeSet?) : View(context, att
 
         canvas.drawRect(0f, 0f, width.toFloat(), height.toFloat(), paintBackGround)
 
+        canvas.drawBitmap(myImg, 0f, 0f, null)
+
         drawGameArea(canvas)
 
         drawPlayers(canvas)
+
+        canvas.drawText("2", 0f, height/3f, paintText)
     }
 
     private fun drawGameArea(canvas: Canvas) {
@@ -88,6 +106,13 @@ class TicTacToeView(context: Context?, attrs: AttributeSet?) : View(context, att
     override fun onTouchEvent(event: MotionEvent): Boolean {
         if (event.action == MotionEvent.ACTION_DOWN) {
 
+            if ((context as MainActivity).isFlagmodeOn()) {
+                // place flag
+            } else {
+                // discover this field / step on this field
+            }
+
+
             // get the right coordinates (0,1,2)
             val tX = event.x.toInt() / (width/3)
             val tY = event.y.toInt() / (height/3)
@@ -96,6 +121,15 @@ class TicTacToeView(context: Context?, attrs: AttributeSet?) : View(context, att
 
                 TicTacToeModel.setFieldContent(tX, tY, TicTacToeModel.nextPlayer)
                 TicTacToeModel.changeNextPlayer()
+
+                var nextMsg = context.getString(R.string.textOComes)
+                if (TicTacToeModel.nextPlayer == TicTacToeModel.CROSS) {
+                    nextMsg = "The next player is X"
+                }
+                (context as MainActivity).showText(nextMsg)
+
+
+
                 invalidate() // the system will call the onDraw(...)
 
                 if (TicTacToeModel.whoIsWinner() == TicTacToeModel.CIRCLE) {
