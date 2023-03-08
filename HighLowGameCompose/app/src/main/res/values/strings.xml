@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">HighLowGameCompose</string>
+    <string name="text_good_luck">Good luck!</string>
+    <string name="text_enter_number">Enter number here</string>
+    <string name="text_congrats">Congratulations! You have won!</string>
+    <string name="text_error_default">Error...</string>
+    <string name="text_error_higher">The number is higher</string>
 </resources>

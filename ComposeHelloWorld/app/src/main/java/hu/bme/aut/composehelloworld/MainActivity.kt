@@ -37,6 +37,14 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
+
+        demoCalc()
+
+    }
+
+    private fun demoCalc() {
+        var a = 3 + 2
+        a = a + 2
     }
 
 }
@@ -52,7 +60,8 @@ fun TimeShower() {
         Text(text = "Time: $currentTime")
         ClickableText(text = AnnotatedString("Press me"),
             onClick = {
-                currentTime = Date(System.currentTimeMillis()).toString()
+                currentTime = Date(
+                    System.currentTimeMillis()).toString()
             } )
         Button(
             onClick = {
