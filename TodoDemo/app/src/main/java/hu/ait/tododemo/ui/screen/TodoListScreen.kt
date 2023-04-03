@@ -15,6 +15,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -33,7 +34,7 @@ fun TodoListScreen(
     todoListViewModel: TodoListViewModel = viewModel(),
     navController: NavController
 ) {
-    var showAddDialog by remember {
+    var showAddDialog by rememberSaveable {
         mutableStateOf(false)
     }
 
@@ -179,7 +180,7 @@ fun TodoCard(
         ),
         modifier = Modifier.padding(5.dp)
     ) {
-        var expanded by remember { mutableStateOf(false) }
+        var expanded by rememberSaveable { mutableStateOf(false) }
 
         Column(
             modifier = Modifier
