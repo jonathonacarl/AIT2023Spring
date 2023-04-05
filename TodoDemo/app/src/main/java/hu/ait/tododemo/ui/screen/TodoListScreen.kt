@@ -31,12 +31,15 @@ import hu.ait.tododemo.R
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TodoListScreen(
-    todoListViewModel: TodoListViewModel = viewModel(),
+    todoListViewModel: TodoListViewModel = viewModel(factory = TodoListViewModel.factory),
     navController: NavController
 ) {
     var showAddDialog by rememberSaveable {
         mutableStateOf(false)
     }
+
+    val todoList by todoListViewModel.getAllToDoList().collectAsState(emptyList())
+
 
     Column(
     ) {
@@ -78,7 +81,7 @@ fun TodoListScreen(
             }
 
             LazyColumn() {
-                items(todoListViewModel.getAllToDoList()) {
+                items(todoList) {
                     TodoCard(todoItem = it,
                         onTodoCheckChange = { checked ->
                             todoListViewModel.changeTodoState(it, checked)
@@ -144,12 +147,11 @@ fun AddNewTodoForm(
                 Button(onClick = {
                     todoListViewModel.addTodoList(
                         TodoItem(
-                            UUID.randomUUID().toString(),
-                            newTodoTitle,
-                            newTodoDesc,
-                            Date(System.currentTimeMillis()).toString(),
-                            if (newTodoPriority) TodoPriority.HIGH else TodoPriority.NORMAL,
-                            false
+                            title = newTodoTitle,
+                            description = newTodoDesc,
+                            createDate = Date(System.currentTimeMillis()).toString(),
+                            priority = if (newTodoPriority) TodoPriority.HIGH else TodoPriority.NORMAL,
+                            isDone = false
                         )
                     )
 
@@ -261,3 +263,4 @@ fun TodoCard(
         }
     }
 }
+
